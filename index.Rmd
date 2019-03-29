@@ -9,15 +9,47 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+```{r}
+library(tidyverse)
+```
+
+
 ## Import
 
 ```{r}
-
+phage_counts <- read_csv("data/phage_counts.csv")
 ```
 
 ## Summarise
 
 ```{r}
+phage_counts <- phage_counts %>% 
+    group_by(subject, arm, timepoint, parent_tax_id) %>% 
+    count()
+```
 
+Number of unique taxa per patient and timepoint.
+```{r}
+tax_per_subj <- phage_counts %>% 
+    group_by(subject, arm, timepoint) %>% 
+    summarise(n_tax = n_distinct(parent_tax_id))
+```
+
+Average number of taxa per arm and timepoint
+```{r}
+tax_per_subj %>% 
+    group_by(arm, timepoint) %>% 
+    summarise(n_tax = mean(n_tax))
+```
+
+Plot mean number of taxa per arm and timepoint:
+```{r}
+pd <- position_dodge(0.1)
+tax_per_subj %>% 
+    ggplot(aes(x = timepoint, y = n_tax, color = arm)) +
+    stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), position = pd) +
+    stat_summary(fun.y = mean, geom = "line", position = pd) +
+    labs(x = "Time, months", y = "Number of parent taxa")
 ```
 
