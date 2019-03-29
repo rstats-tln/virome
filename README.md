@@ -1,5 +1,12 @@
 # Human gut virome composition and dynamics in T2D patients receiving Metformin 
 
+
+1) import data
+2) summarise
+3) visualise
+4) ...
+
+
 ## Data
 
 **data/phage_counts.csv** contains gut metagenomic shotgun reads that were assigned to division phages from study of newly diagnosed T2D patients receiving either metformin or placebo (study accession: PRJNA361402). Samples were collected at three timepoints: before treatments, 2 months after start of treatment and 4 months after start of treatment. All patients were also on calorie restriction diet during the study.
